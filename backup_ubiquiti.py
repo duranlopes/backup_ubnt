@@ -4,6 +4,7 @@ from scp import SCPClient
 from config import ips, user, password, localfile
 
 path = os.getcwd()
+backup_folder = path +'\\backup'
 
 def backup_radio(ip_radio, directory):
     try:
@@ -12,6 +13,8 @@ def backup_radio(ip_radio, directory):
         ssh.connect(ip_radio, username=user, password=password)
         try:
             print ('Efetuando backup do radio: '+ip_radio)
+            if not os.path.exists(backup_folder):
+                os.mkdir(backup_folder)
             scp = SCPClient(ssh.get_transport())
             scp.get(localfile, directory)
         except:
@@ -33,13 +36,13 @@ def rename_file(old_name, new_name):
 
 def main():
     for key, value in ips.items():
-        newname = key+'.cfg'
-        backup_radio(value, path)
-        backup_file = path + '\system.cfg'
+        newname = backup_folder +'\\'+ key+'.cfg'
+        backup_radio(value, backup_folder)
+        backup_file = backup_folder + '\system.cfg'
         if os.path.exists(backup_file):
+            #print (newname)
             rename_file(backup_file, newname)
-            #print (backup_file)
-            print('Backup efetuado com sucesso')
+        print('Backup efetuado com sucesso')
 
 
 if __name__ == '__main__':
