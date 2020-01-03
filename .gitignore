@@ -2,3 +2,7 @@ __pycache__/config.cpython-38.pyc
 ap.cfg
 station.cfg
 config.py
+Scripts/
+Lib/
+pyvenv.cfg
+.vscode/
