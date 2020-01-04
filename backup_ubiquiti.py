@@ -34,11 +34,22 @@ def rename_file(old_name, new_name):
         os.remove(new_name)
         os.rename(old_name, new_name)
 
+def new_name():
+    if os.name == 'nt':
+        newname = backup_folder +'\\'+ key+'.cfg'
+    else:
+        newname = backup_folder +'/'+ key+'.cfg'
+
+
 def main():
     for key, value in ips.items():
-        newname = backup_folder +'\\'+ key+'.cfg'
+        if os.name == 'nt':
+            newname = backup_folder +'\\'+ key+'.cfg'
+            backup_file = backup_folder + '\system.cfg'
+        else:
+            newname = backup_folder +'/'+ key+'.cfg'
+            backup_file = backup_folder + '/system.cfg'
         backup_radio(value, backup_folder)
-        backup_file = backup_folder + '\system.cfg'
         if os.path.exists(backup_file):
             #print (newname)
             rename_file(backup_file, newname)
