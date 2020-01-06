@@ -26,6 +26,7 @@ def backup_radio(ip_radio, directory):
                 os.mkdir(backup_folder)
             scp = SCPClient(ssh.get_transport())
             scp.get(localfile, directory)
+            print('Backup efetuado com sucesso')
         except:
             print('Falha ao fazer download do arquivo em %s' % ip_radio)
         ssh.close()
@@ -50,7 +51,7 @@ def main():
         backup_radio(value, backup_folder)
         if os.path.exists(backup_file):
             rename_file(backup_file, newname)
-        print('Backup efetuado com sucesso')
+        
 
 if __name__ == '__main__':
     main()
